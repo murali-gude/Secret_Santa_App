@@ -2,48 +2,47 @@ import { useState } from "react";
 import "./App.css";
 
 import CreateEvent from "./CreateEvent";
-import AddParticipant from "./AddParticipant";
-import DrawButton from "./DrawButton";
-import ViewAssignments from "./ViewAssignments";
+import JoinEvent from "./JoinEvent";
 import ParticipantList from "./ParticipantList";
 
 function App() {
 
   const [eventId, setEventId] = useState(null);
+  const [participantId, setParticipantId] = useState(null);
 
   return (
     <div className="container">
 
       <h1 className="title">🎁 Secret Santa App</h1>
-      <p>Current Event ID: {eventId}</p>
 
+      {/* Step 1: Create Event */}
       <div className="card">
         <CreateEvent onEventCreated={setEventId} />
       </div>
 
+      {/* Step 2: Join Event */}
+      {eventId && !participantId && (
+        <div className="card">
+          <JoinEvent 
+            eventId={eventId}
+            onJoined={setParticipantId}
+          />
+        </div>
+      )}
+
+      {/* Step 3: Show participants */}
       {eventId && (
-  <>
-    <div className="card">
-      <AddParticipant eventId={eventId} />
-    </div>
+        <div className="card">
+          <ParticipantList eventId={eventId} />
+        </div>
+      )}
 
-    <div className="card">
-      <ParticipantList eventId={eventId} />
-    </div>
-
-    <div className="card">
-      <DrawButton eventId={eventId} />
-    </div>
-
-    <div className="card">
-      <ViewAssignments eventId={eventId} />
-    </div>
-  </>
-)}
+      {/* Debug display */}
+      <p>Event ID: {eventId}</p>
+      <p>Participant ID: {participantId}</p>
 
     </div>
   );
-
 }
 
 export default App;
