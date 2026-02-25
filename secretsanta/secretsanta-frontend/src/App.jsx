@@ -10,34 +10,34 @@ function App() {
   const [eventId, setEventId] = useState(null);
   const [participantId, setParticipantId] = useState(null);
 
+  const handleJoined = (eventId, participantId) => {
+    setEventId(eventId);
+    setParticipantId(participantId);
+  };
+
   return (
     <div className="container">
 
       <h1 className="title">🎁 Secret Santa App</h1>
 
-      {/* Step 1: Create Event */}
+      {/* Organizer creates event */}
       <div className="card">
         <CreateEvent onEventCreated={setEventId} />
       </div>
 
-      {/* Step 2: Join Event */}
-      {eventId && !participantId && (
-        <div className="card">
-          <JoinEvent 
-            eventId={eventId}
-            onJoined={setParticipantId}
-          />
-        </div>
-      )}
+      {/* Participant joins event (ALWAYS visible) */}
+      <div className="card">
+        <JoinEvent onJoined={handleJoined} />
+      </div>
 
-      {/* Step 3: Show participants */}
+      {/* Show participants after event selected */}
       {eventId && (
         <div className="card">
           <ParticipantList eventId={eventId} />
         </div>
       )}
 
-      {/* Debug display */}
+      {/* Debug info */}
       <p>Event ID: {eventId}</p>
       <p>Participant ID: {participantId}</p>
 

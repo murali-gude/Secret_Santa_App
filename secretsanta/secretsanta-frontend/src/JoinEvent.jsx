@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-function JoinEvent({ eventId, onJoined }) {
+function JoinEvent({ onJoined }) {
 
+  const [eventId, setEventId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
@@ -20,7 +21,7 @@ function JoinEvent({ eventId, onJoined }) {
     .then(res => res.json())
     .then(data => {
       alert("Joined successfully");
-      onJoined(data.participantId);
+      onJoined(eventId, data.participantId);
     });
 
   };
@@ -29,12 +30,25 @@ function JoinEvent({ eventId, onJoined }) {
     <div>
       <h2>Join Event</h2>
 
-      <input placeholder="Name" onChange={(e)=>setName(e.target.value)} />
-      <input placeholder="Email" onChange={(e)=>setEmail(e.target.value)} />
+      <input
+        placeholder="Event ID"
+        onChange={(e)=>setEventId(e.target.value)}
+      />
+
+      <input
+        placeholder="Your Name"
+        onChange={(e)=>setName(e.target.value)}
+      />
+
+      <input
+        placeholder="Your Email"
+        onChange={(e)=>setEmail(e.target.value)}
+      />
 
       <button onClick={joinEvent}>
-        Join
+        Join Event
       </button>
+
     </div>
   );
 }
