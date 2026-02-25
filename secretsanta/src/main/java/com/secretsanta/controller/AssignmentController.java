@@ -1,22 +1,20 @@
 package com.secretsanta.controller;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.secretsanta.entity.Assignment;
 import com.secretsanta.entity.Event;
 import com.secretsanta.entity.Participant;
 import com.secretsanta.repository.AssignmentRepository;
 import com.secretsanta.repository.ParticipantRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Collections;
+
 @RestController
 @RequestMapping("/assignments")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AssignmentController {
 
     @Autowired
@@ -25,6 +23,8 @@ public class AssignmentController {
     @Autowired
     private AssignmentRepository assignmentRepository;
 
+
+    // ✅ SELF DRAW METHOD WITH DUPLICATE PROTECTION
     @PostMapping("/participants/{participantId}/draw")
     public Assignment drawForParticipant(@PathVariable Integer participantId) {
 
@@ -32,6 +32,14 @@ public class AssignmentController {
                 .orElseThrow(() -> new RuntimeException("Participant not found"));
 
         Event event = giver.getEvent();
+
+        // ✅ CHECK if already drawn
+        Assignment existingAssignment =
+                assignmentRepository.findByGiver(giver);
+
+        if (existingAssignment != null) {
+            return existingAssignment;
+        }
 
         List<Participant> participants =
                 participantRepository.findByEvent(event);
@@ -48,10 +56,12 @@ public class AssignmentController {
                 .orElseThrow();
 
         Assignment assignment = new Assignment();
+
         assignment.setEvent(event);
         assignment.setGiver(giver);
         assignment.setReceiver(receiver);
 
         return assignmentRepository.save(assignment);
     }
+
 }

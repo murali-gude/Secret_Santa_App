@@ -21,12 +21,15 @@ function DrawMySanta({ participantId }) {
 
       <h2>Draw Secret Santa</h2>
 
-      <button onClick={draw}>
-        Draw Now
+      <button
+        onClick={draw}
+        disabled={receiver}
+      >
+        {receiver ? "Already Drawn" : "Draw Now"}
       </button>
 
       {receiver && (
-        <div style={{marginTop:"15px"}}>
+        <div style={{ marginTop: "15px", color: "lightgreen" }}>
           🎁 You got: <b>{receiver.name}</b><br/>
           📧 Email: {receiver.email}
         </div>
