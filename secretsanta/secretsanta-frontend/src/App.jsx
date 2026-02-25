@@ -4,12 +4,17 @@ import "./App.css";
 import CreateEvent from "./CreateEvent";
 import JoinEvent from "./JoinEvent";
 import ParticipantList from "./ParticipantList";
+import DrawMySanta from "./DrawMySanta";
 
 function App() {
 
+  // Stores selected event
   const [eventId, setEventId] = useState(null);
+
+  // Stores logged-in participant
   const [participantId, setParticipantId] = useState(null);
 
+  // Called when participant joins event
   const handleJoined = (eventId, participantId) => {
     setEventId(eventId);
     setParticipantId(participantId);
@@ -25,21 +30,30 @@ function App() {
         <CreateEvent onEventCreated={setEventId} />
       </div>
 
-      {/* Participant joins event (ALWAYS visible) */}
+      {/* Participant joins existing event */}
       <div className="card">
         <JoinEvent onJoined={handleJoined} />
       </div>
 
-      {/* Show participants after event selected */}
+      {/* Show participants list */}
       {eventId && (
         <div className="card">
           <ParticipantList eventId={eventId} />
         </div>
       )}
 
-      {/* Debug info */}
-      <p>Event ID: {eventId}</p>
-      <p>Participant ID: {participantId}</p>
+      {/* Participant draws their Secret Santa */}
+      {participantId && (
+        <div className="card">
+          <DrawMySanta participantId={participantId} />
+        </div>
+      )}
+
+      {/* Debug info (optional) */}
+      <div className="card">
+        <p>Event ID: {eventId}</p>
+        <p>Participant ID: {participantId}</p>
+      </div>
 
     </div>
   );
