@@ -63,5 +63,13 @@ public class AssignmentController {
 
         return assignmentRepository.save(assignment);
     }
+    @GetMapping("/participants/{participantId}")
+public Assignment getAssignment(@PathVariable Integer participantId) {
+
+    Participant giver = participantRepository.findById(participantId)
+            .orElseThrow();
+
+    return assignmentRepository.findByGiver(giver);
+}
 
 }
