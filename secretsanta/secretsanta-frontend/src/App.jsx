@@ -49,12 +49,7 @@ function App() {
         </div>
       )}
 
-      {/* Debug info (optional) */}
-      <div className="card">
-        <p>Event ID: {eventId}</p>
-        <p>Participant ID: {participantId}</p>
-      </div>
-
+    
     </div>
   );
 }
