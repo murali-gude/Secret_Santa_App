@@ -23,8 +23,10 @@ function App() {
   return (
     <div className="container">
 
-      <h1 className="title">🎁 Secret Santa App</h1>
-
+<div className="hero">
+  <h1>🎅 Secret Santa</h1>
+  <p>Organize your Christmas gift exchange easily and magically</p>
+</div>
       {/* Organizer creates event */}
       <div className="card">
         <CreateEvent onEventCreated={setEventId} />
