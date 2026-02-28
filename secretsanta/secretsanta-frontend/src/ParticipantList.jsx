@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import API_BASE from "./config";
 
 function ParticipantList({ eventId }) {
 

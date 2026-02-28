@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API_BASE from "./config";
 
 function DrawMySanta({ participantId }) {
 
