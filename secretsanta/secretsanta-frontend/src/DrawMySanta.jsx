@@ -6,7 +6,7 @@ function DrawMySanta({ participantId }) {
   const [receiver, setReceiver] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/assignments/participants/${participantId}`)
+    fetch(`${API_BASE}/assignments/participants/${participantId}`)
       .then(res => res.json())
       .then(data => {
         if (data) setReceiver(data.receiver);
@@ -14,7 +14,7 @@ function DrawMySanta({ participantId }) {
   }, [participantId]);
 
   const draw = () => {
-    fetch(`http://localhost:8080/assignments/participants/${participantId}/draw`, {
+    fetch(`${API_BASE}/assignments/participants/${participantId}/draw`, {
       method: "POST"
     })
     .then(res => res.json())
@@ -30,8 +30,12 @@ function DrawMySanta({ participantId }) {
       </button>
 
       {receiver && (
-        <p>🎁 You got: <b>{receiver.name}</b></p>
+        <div className="result">
+          🎁 You got: <b>{receiver.name}</b><br/>
+          📧 Email: {receiver.email}
+        </div>
       )}
+
     </div>
   );
 }

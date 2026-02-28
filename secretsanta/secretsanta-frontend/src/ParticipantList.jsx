@@ -5,15 +5,11 @@ function ParticipantList({ eventId }) {
 
   const [participants, setParticipants] = useState([]);
 
-  const loadParticipants = () => {
-    fetch(`http://localhost:8080/events/${eventId}/participants`)
-      .then(res => res.json())
-      .then(data => setParticipants(data));
-  };
-
   useEffect(() => {
     if(eventId){
-      loadParticipants();
+      fetch(`${API_BASE}/events/${eventId}/participants`)
+        .then(res => res.json())
+        .then(data => setParticipants(data));
     }
   }, [eventId]);
 
@@ -21,15 +17,11 @@ function ParticipantList({ eventId }) {
     <div>
       <h2>Participants</h2>
 
-      {participants.length === 0 ? (
-        <p>No participants yet</p>
-      ) : (
-        participants.map((p, index) => (
-          <div key={index}>
-            👤 {p.name} ({p.email})
-          </div>
-        ))
-      )}
+      {participants.map((p) => (
+        <div key={p.participantId}>
+          {p.name}
+        </div>
+      ))}
 
     </div>
   );

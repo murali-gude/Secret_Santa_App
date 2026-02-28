@@ -9,7 +9,7 @@ function JoinEvent({ onJoined }) {
 
   const joinEvent = () => {
 
-    fetch(`http://localhost:8080/events/${eventId}/participants`, {
+    fetch(`${API_BASE}/events/${eventId}/participants`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -21,7 +21,6 @@ function JoinEvent({ onJoined }) {
     })
     .then(res => res.json())
     .then(data => {
-      alert("Joined successfully");
       onJoined(eventId, data.participantId);
     });
 
@@ -49,7 +48,6 @@ function JoinEvent({ onJoined }) {
       <button onClick={joinEvent}>
         Join Event
       </button>
-
     </div>
   );
 }
